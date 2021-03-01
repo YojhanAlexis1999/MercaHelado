@@ -2,8 +2,8 @@ const router = require('express').Router();
 const database = require('../database');
 
 /// Terminos y condiciones
-// Listar
 
+// Listar
 router.get('/terminos', async (req,res) => {
     const terminos = await database.query("Select * from terminos");
     res.json({ terminos })
@@ -39,6 +39,8 @@ router.put('/terminos/:id', async (req,res) => {
 
 
 /// Comentarios
+
+//listar
 router.get('/comentarios', async (req,res) => {
     const comentarios = await database.query("Select * from comentarios");
     res.json({ comentarios })
@@ -72,8 +74,109 @@ router.put('/:id', async (req,res) => {
 });
 
 /// Productos
+
+//listar
+router.get('/productos', async (req,res) => {
+    const productos = await database.query("Select * from productos");
+    res.json({ productos })
+});
+// Consultar
+router.get('/productos/:id', async (req,res) => {
+    const {id} = req.params;
+    const productos = await database.query("Select * from productos where id_producto = ?", [id] );
+    res.json({productos})
+});
+// Agregar
+router.post('/productos',async (req,res) =>{
+    const {productos} = req.body;
+    const dato = [productos];
+    await database.query("Insert Into productos (nombre,marca,precio,cantidad,id_pedido)  values (?,?,?,?,?)",dato);
+    res.json({msg:"Producto agregado"});
+});
+// Eliminar 
+router.delete('/productos/:id', async (req,res) => {
+    const {id} = req.params;
+    await database.query("Delete from productos where id_producto = ?",[id]);
+    res.json({msg:"Productos eliminado"});
+});
+// Modificar
+router.put('/productos/:id', async (req,res) => {
+    const {id} = req.params;
+    const {descripcion} = req.body;
+    const datos = [descripcion,id];
+    await database.query("Update productos set nombre = ?, marca = ?, precio = ?,cantidad = ?,id_pedido = ? Where id_producto = ?",datos);
+    res.json({msg:"Productos modificado"})
+});
+
 /// Roles
-// pedidos
+
+//listar
+router.get('/rol', async (req,res) => {
+    const rol = await database.query("Select * from rol");
+    res.json({ rol })
+});
+// Consultar
+router.get('/rol/:id', async (req,res) => {
+    const {id} = req.params;
+    const rol = await database.query("Select * from rol where id_rol = ?", [id] );
+    res.json({ rol })
+});
+// Agregar
+router.post('/rol',async (req,res) =>{
+    const {descripcion} = req.body;
+    const dato = [descripcion];
+    await database.query("Insert Into rol (descripcion)  values (?)",dato);
+    res.json({msg:"Rol agregado"});
+});
+// Eliminar 
+router.delete('/rol/:id', async (req,res) => {
+    const {id} = req.params;
+    await database.query("Delete from rol where id_rol = ?",[id]);
+    res.json({msg:"rol eliminado"});
+});
+// Modificar
+router.put('/rol/:id', async (req,res) => {
+    const {id} = req.params;
+    const {descripcion} = req.body;
+    const datos = [descripcion,id];
+    await database.query("Update rol set descripcion = ? Where id_rol = ?",datos);
+    res.json({msg:"rol modificado"})
+});
+
+/// Pedidos
+
+//listar
+router.get('/pedidos', async (req,res) => {
+    const pedidos = await database.query("Select * from pedidos");
+    res.json({ pedidos })
+});
+// Consultar
+router.get('/pedidos/:id', async (req,res) => {
+    const {id} = req.params;
+    const pedidos = await database.query("Select * from pedidos where id_pedidos = ?", [id] );
+    res.json({pedidos})
+});
+// Agregar
+router.post('/pedidos',async (req,res) =>{
+    const {cantidad} = req.body;
+    const dato = [cantidad];
+    await database.query("Insert Into pedidos (cantidad)  values (?)",dato);
+    res.json({msg:"pedidos agregado"});
+});
+// Eliminar 
+router.delete('/pedidos/:id', async (req,res) => {
+    const {id} = req.params;
+    await database.query("Delete from pedidos where id_pedidos = ?",[id]);
+    res.json({msg:"pedidos eliminado"});
+});
+// Modificar
+router.put('/pedidos/:id', async (req,res) => {
+    const {id} = req.params;
+    const {cantidad} = req.body;
+    const datos = [cantidad,id];
+    await database.query("Update productos set cantidad = ? = ? Where id_pedidos = ?",datos);
+    res.json({msg:"Pedidos modificado"})
+});
 // descuentos
 // inventario 
 
