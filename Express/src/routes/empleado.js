@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const database = require('../database');
-// Registro de usuarios
+/// Datos personales 
+/// Solicitud de trabajo
+
 // Listar
 router.get('/', async (req,res) => {
     const usuarios = await database.query("Select * from usuarios");
@@ -33,25 +35,5 @@ router.put('/:id', async (req,res) => {
     await database.query("Update usuarios set nombre = ?, apellido= ?, correo = ?, telefono = ?, contra = ?, id_rol = ? Where id_usuario=?",datos);
     res.json({msg:"Registro modificado"})
 });
-
-//Comentario
-router.post('/comentario',async (req,res) =>{
-    const {descripcion} = req.body;
-    const dato = [descripcion];
-    await database.query("Insert Into comentarios (descripcion  values (?)",dato);
-    res.json({msg:"Comentario exitoso"});
-});
-// 
-/*
-exports.ListarUsuario = async (req,res) => {
-    const usuarios = await database.query("select * from usuarios");
-    res.json({ usuarios })
-}
-
-exports.ListarUsuario = async (req,res) => {
-    const {id} = req.params;
-    const usuarios = await database.query("select * from usuarios where id_usuario = ?", [id] );
-    res.json({usuarios});
-}*/
 
 module.exports = router;

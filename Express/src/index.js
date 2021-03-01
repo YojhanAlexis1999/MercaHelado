@@ -12,6 +12,8 @@ app.use(morgan('dev'));
 const PORT = process.env.PORT || 3000;
 
 app.use(require('./routes/usuarios'));
+app.use(require('./routes/empleado'));
+app.use(require('./routes/administrador'));
 
 app.listen(PORT, () => {
     console.log("localhost:" + PORT);
