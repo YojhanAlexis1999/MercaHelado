@@ -35,12 +35,19 @@ router.put('/:id', async (req,res) => {
 });
 
 //Comentario
-router.post('/comentario',async (req,res) =>{
+//listar
+router.get('/comentario', async (req,res) => {
+    const comenta = await database.query("Select * from comentarios");
+    res.json({ comenta })
+});
+//Agregar
+router.post('/comentarios',async (req,res) =>{
     const {descripcion} = req.body;
     const dato = [descripcion];
-    await database.query("Insert Into comentarios (descripcion  values (?)",dato);
+    await database.query("Insert Into comentarios (descripcion)  values (?)",dato);
     res.json({msg:"Comentario exitoso"});
 });
+
 // 
 /*
 exports.ListarUsuario = async (req,res) => {

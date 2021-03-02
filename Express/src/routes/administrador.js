@@ -41,31 +41,31 @@ router.put('/terminos/:id', async (req,res) => {
 /// Comentarios
 
 //listar
-router.get('/comentarios', async (req,res) => {
+router.get('/comentario', async (req,res) => {
     const comentarios = await database.query("Select * from comentarios");
     res.json({ comentarios })
 });
 // Consultar
-router.get('/comentarios/:id', async (req,res) => {
+router.get('/comentario/:id', async (req,res) => {
     const {id} = req.params;
     const comentarios = await database.query("Select * from comentarios where id_comentario = ?", [id] );
     res.json({comentarios})
 });
 // Agregar
 router.post('/comentario',async (req,res) =>{
-    const {comentarios} = req.body;
-    const dato = [comentarios];
+    const {descripcion} = req.body;
+    const dato = [descripcion];
     await database.query("Insert Into comentarios (descripcion)  values (?)",dato);
     res.json({msg:"Comentario agregado"});
 });
 // Eliminar 
-router.delete('/comentarios/:id', async (req,res) => {
+router.delete('/comentario/:id', async (req,res) => {
     const {id} = req.params;
     await database.query("Delete from comentarios where id_comentario = ?",[id]);
     res.json({msg:"Comentario eliminado"});
 });
 // Modificar
-router.put('/:id', async (req,res) => {
+router.put('/comentario/:id', async (req,res) => {
     const {id} = req.params;
     const {descripcion} = req.body;
     const datos = [descripcion,id];
@@ -174,7 +174,7 @@ router.put('/pedidos/:id', async (req,res) => {
     const {id} = req.params;
     const {cantidad} = req.body;
     const datos = [cantidad,id];
-    await database.query("Update productos set cantidad = ?  Where id_pedidos = ?",datos);
+    await database.query("Update pedidos set cantidad = ?  Where id_pedidos = ?",datos);
     res.json({msg:"Pedidos modificado"})
 });
 // descuentos
