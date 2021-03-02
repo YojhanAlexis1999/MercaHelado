@@ -36,8 +36,8 @@ router.put('/:id', async (req,res) => {
 
 //Comentario
 //listar
-router.get('/comentario', async (req,res) => {
-    const comenta = await database.query("Select * from comentarios");
+router.get('/comentarios', async (req,res) => {
+    const comenta = await database.query("select * from comentarios");
     res.json({ comenta })
 });
 //Agregar

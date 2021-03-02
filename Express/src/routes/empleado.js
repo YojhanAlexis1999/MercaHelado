@@ -26,46 +26,46 @@ router.delete('/datos/:id', async (req,res) => {
     res.json({msg:"Dato eliminado"});
 });
 // Modificar
-router.put('/dato/:id', async (req,res) => {
+router.put('/datos/:id', async (req,res) => {
     const {id} = req.params;
     const {nombre,apellido,cedula,telefono,sexo,edad,fechaN} = req.body;
     const datos = [nombre,apellido,cedula,telefono,sexo,edad,fechaN,id];
-    await database.query("Update usuarios set nombre = ?, apellido= ?, telefono = ?, sexo = ?, edad = ?, fechaN = ? Where id_datos=?",datos);
+    await database.query("Update datos set nombre = ?, apellido= ?, cedula=?,telefono = ?, sexo = ?, edad = ?, fechaN = ? Where id_datos=?",datos);
     res.json({msg:"Dato modificado"})
 });
 
 /// Solicitud de trabajo
 // Listar
-router.get('/', async (req,res) => {
-    const usuarios = await database.query("Select * from usuarios");
-    res.json({ usuarios })
+router.get('/solicitud', async (req,res) => {
+    const solicitud = await database.query("Select * from solicitud");
+    res.json({ solicitud })
 });
 // Consultar
-router.get('/:id', async (req,res) => {
+router.get('/solicitud/:id', async (req,res) => {
     const {id} = req.params;
-    const usuarios = await database.query("Select * from usuarios where id_usuario = ?", [id] );
-    res.json({usuarios})
+    const solicitud = await database.query("Select * from solicitud where id_solicitud = ?", [id] );
+    res.json({solicitud})
 });
 // Agregar
-router.post('/',async (req,res) =>{
-    const {nombre,apellido,correo,telefono,contra,id_rol} = req.body;
-    const datos = [nombre,apellido,correo,telefono,contra,id_rol];
-    await database.query("Insert Into usuarios (nombre,apellido,correo,telefono,contra,id_rol) values (?,?,?,?,?,?)",datos);
-    res.json({msg:"Registro exitoso"});
+router.post('/solicitud',async (req,res) =>{
+    const {cargo,id_rol} = req.body;
+    const datos = [cargo,id_rol];
+    await database.query("Insert Into solicitud (cargo,id_rol) values (?,?)",datos);
+    res.json({msg:"solicitud exitosa"});
 });
 // Eliminar 
-router.delete('/:id', async (req,res) => {
+router.delete('/solicitud/:id', async (req,res) => {
     const {id} = req.params;
-    await database.query("Delete from usuarios where id_usuario = ?",[id]);
-    res.json({msg:"Usuario eliminado"});
+    await database.query("Delete from solicitud where id_solicitud = ?",[id]);
+    res.json({msg:"solicitud eliminada"});
 });
 // Modificar
-router.put('/:id', async (req,res) => {
+router.put('/solicitud/:id', async (req,res) => {
     const {id} = req.params;
-    const {nombre,apellido,correo,telefono,contra,id_rol} = req.body;
-    const datos = [nombre,apellido,correo,telefono,contra,id_rol,id];
-    await database.query("Update usuarios set nombre = ?, apellido= ?, correo = ?, telefono = ?, contra = ?, id_rol = ? Where id_usuario=?",datos);
-    res.json({msg:"Registro modificado"})
+    const {cargo,id_rol} = req.body;
+    const datos = [cargo,id_rol,id];
+    await database.query("Update solicitud set cargo = ?, id_rol = ? Where id_solicitud=?",datos);
+    res.json({msg:"solicitud modificada"})
 });
 
 module.exports = router;
