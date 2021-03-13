@@ -1,5 +1,12 @@
 const router = require('express').Router();
 const database = require('../database');
+//Login
+router.post('/login',async(req,res)=>{
+    const {correo,contra} = req.body;
+    const datos = [correo,contra];
+    const usuario = await database.query("select *from usuarios where correo = ? AND contra = ?",datos)
+    res.json({ usuario })
+})
 // Registro de usuarios
 // Listar
 router.get('/', async (req,res) => {
@@ -36,12 +43,13 @@ router.put('/:id', async (req,res) => {
 
 //Comentario
 //listar
-router.get('/comentarios', async (req,res) => {
+router.get('/listarcomentario', async (req,res) => {
     const comenta = await database.query("select * from comentarios");
-    res.json({ comenta })
+    res.json({ comenta });
+    console.log(comenta);
 });
 //Agregar
-router.post('/comentarios',async (req,res) =>{
+router.post('/listarcomentario',async (req,res) =>{
     const {descripcion} = req.body;
     const dato = [descripcion];
     await database.query("Insert Into comentarios (descripcion)  values (?)",dato);

@@ -178,6 +178,38 @@ router.put('/pedidos/:id', async (req,res) => {
     res.json({msg:"Pedidos modificado"})
 });
 // descuentos
+router.get('/descuento', async (req,res) => {
+    const descuento = await database.query("select * from descuento");
+    res.json({ descuento })
+});
+// Consultar
+router.get('/descuento/:id', async (req,res) => {
+    const {id} = req.params;
+    const descuento = await database.query("Select * from descuento where id_descuento = ?", [id] );
+    res.json({descuento})
+});
+// Agregar
+router.post('/descuento',async (req,res) =>{
+    const {descuento,id_producto} = req.body;
+    const dato = [descuento,id_producto];
+    await database.query("Insert Into descuento (descuento,id_producto)  values (?,?)",dato);
+    res.json({msg:"descuento agregado"});
+});
+// Eliminar 
+router.delete('/descuento/:id', async (req,res) => {
+    const {id} = req.params;
+    await database.query("Delete from descuento where id_descuento = ?",[id]);
+    res.json({msg:"descuento eliminado"});
+});
+// Modificar
+router.put('/descuento/:id', async (req,res) => {
+    const {id} = req.params;
+    const {descuento,id_producto} = req.body;
+    const datos = [descuento,id_producto,id];
+    await database.query("Update descuento set descuento = ?,id_producto = ? Where id_descuento = ?",datos);
+    res.json({msg:"descuento modificado"})
+});
+
 // inventario
 //listar
 router.get('/inventario', async (req,res) => {
@@ -192,9 +224,9 @@ router.get('/inventario/:id', async (req,res) => {
 });
 // Agregar
 router.post('/inventario',async (req,res) =>{
-    const {nombre,cantidad,marca,precio,peso} = req.body;
-    const dato = [nombre,cantidad,marca,precio,peso];
-    await database.query("Insert Into inventario (nombre,cantidad,marca,precio,peso)  values (?,?,?,?,?)",dato);
+    const {id_producto,cantidad,peso,fecha_ingreso} = req.body;
+    const dato = [id_producto,cantidad,peso,fecha_ingreso];
+    await database.query("Insert Into inventario (id_producto,cantidad,peso,fecha_ingreso)  values (?,?,?,?,?)",dato);
     res.json({msg:"Inventario agregado"});
 });
 // Eliminar 
@@ -206,9 +238,9 @@ router.delete('/inventario/:id', async (req,res) => {
 // Modificar
 router.put('/inventario/:id', async (req,res) => {
     const {id} = req.params;
-    const {nombre,cantidad,marca,precio,peso} = req.body;
-    const datos = [nombre,cantidad,marca,precio,peso,id];
-    await database.query("Update inventario set nombre = ?,cantidad = ?,marca = ?,precio = ?,peso = ? Where id_inventario = ?",datos);
+    const {id_producto,cantidad,peso,fecha_ingreso} = req.body;
+    const datos = [id_producto,cantidad,peso,fecha_ingreso,id];
+    await database.query("Update inventario set id_producto = ?,cantidad = ?,peso = ?,fecha_ingreso= ? Where id_inventario = ?",datos);
     res.json({msg:"inventario modificado"})
 });
 
