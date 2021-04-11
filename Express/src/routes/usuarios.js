@@ -10,7 +10,7 @@ router.post('/login',async(req,res)=>{
 // Registro de usuarios
 // Listar
 router.get('/', async (req,res) => {
-    const usuarios = await database.query("Select * from usuarios");
+    const usuarios = await database.query("SELECT u.id_usuario,u.nombre,u.apellido,u.correo,u.telefono,u.contra, r.descripcion,r.id_rol FROM usuarios u, rol r WHERE u.id_rol = r.id_rol");
     res.json({ usuarios })
 });
 // Consultar
