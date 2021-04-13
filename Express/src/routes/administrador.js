@@ -226,7 +226,7 @@ router.get('/inventario/:id', async (req,res) => {
 router.post('/inventario',async (req,res) =>{
     const {id_producto,cantidad,peso,fecha_ingreso} = req.body;
     const dato = [id_producto,cantidad,peso,fecha_ingreso];
-    await database.query("Insert Into inventario (id_producto,cantidad,peso,fecha_ingreso)  values (?,?,?,?,?)",dato);
+    await database.query("Insert Into inventario (id_producto,cantidad,peso,fecha_ingreso)  values (?,?,?,?)",dato);
     res.json({msg:"Inventario agregado"});
 });
 // Eliminar 

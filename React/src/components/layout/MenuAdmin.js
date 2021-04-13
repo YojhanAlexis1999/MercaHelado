@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import { 
     Navbar, 
-    Nav
+    Nav,
+    Button
 } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom';
+import AutenticacionContext from '../../context/autenticacion/autenticacionContext';
+
     
 
 const MenuAdmin = () => {
+
+    const history = useHistory();
+    const autenticacionContext = useContext(AutenticacionContext)
+    const { CerrarSesion } = autenticacionContext
+    const Salir = () =>{
+        CerrarSesion()
+        history.push("/")
+    }
     return (
         <div>
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand href="#home">Administrador</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -21,6 +33,7 @@ const MenuAdmin = () => {
                         <Nav.Link href="/Descuento">Descuentos</Nav.Link>
                         <Nav.Link href="/Inventario">Inventario</Nav.Link>
                         <Nav.Link href="/UsuarioListar">Usuarios</Nav.Link>
+                        <Button variant="link" onClick={Salir} >Cerrar Seccion</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

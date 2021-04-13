@@ -1,10 +1,12 @@
 import React from 'react'
 import Card from '../layout/CardFet.js'
+import MenuUsuario from '../layout/MenuUsuario.js'
 
 
 const Usuario = () => {
     return (
         <div>
+            <MenuUsuario></MenuUsuario>
             <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
                 <Card.Body>
