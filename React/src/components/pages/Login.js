@@ -60,7 +60,7 @@ const Login = () => {
     return (
         <div>
             <Navbars />
-            <Form onSubmit={onSubmit}>
+            <Form size="lg" onSubmit={onSubmit}>
                 <Form.Group>
                     <Form.Label>Correo</Form.Label>
                     <Form.Control 
