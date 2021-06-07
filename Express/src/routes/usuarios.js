@@ -34,11 +34,17 @@ router.delete('/:id', async (req,res) => {
 });
 // Modificar
 router.put('/:id', async (req,res) => {
-    const {id} = req.params;
-    const {nombre,apellido,correo,telefono,contra,id_rol} = req.body;
-    const datos = [nombre,apellido,correo,telefono,contra,id_rol,id];
-    await database.query("Update usuarios set nombre = ?, apellido= ?, correo = ?, telefono = ?, contra = ?, id_rol = ? Where id_usuario=?",datos);
-    res.json({msg:"Registro modificado"})
+    try {
+        const {id} = req.params;
+        const {nombre,apellido,correo,telefono,contra,id_rol} = req.body;
+        const datos = [nombre,apellido,correo,telefono,contra,id_rol,id];
+        await database.query("Update usuarios set nombre = ?, apellido= ?, correo = ?, telefono = ?, contra = ?, id_rol = ? Where id_usuario=?",datos);
+        res.status(200).json({msg:"Registro modificado"})
+        console.log(req.body);
+    } catch (error) {
+        res.status(401).json({error})
+        console.log(error);
+    }
 });
 
 //Comentario

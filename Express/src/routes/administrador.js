@@ -158,9 +158,9 @@ router.get('/pedidos/:id', async (req,res) => {
 });
 // Agregar
 router.post('/pedidos',async (req,res) =>{
-    const {cantidad} = req.body;
-    const dato = [cantidad];
-    await database.query("Insert Into pedidos (cantidad)  values (?)",dato);
+    const {id_producto,id_usuario,cantidad} = req.body;
+    const dato = [id_producto,id_usuario,cantidad];
+    await database.query("Insert Into pedidos (id_producto,id_usuario,cantidad)  values (?,?,?)",dato);
     res.json({msg:"pedidos agregado"});
 });
 // Eliminar 
@@ -172,9 +172,9 @@ router.delete('/pedidos/:id', async (req,res) => {
 // Modificar
 router.put('/pedidos/:id', async (req,res) => {
     const {id} = req.params;
-    const {cantidad} = req.body;
-    const datos = [cantidad,id];
-    await database.query("Update pedidos set cantidad = ?  Where id_pedidos = ?",datos);
+    const {id_producto,id_usuario,cantidad} = req.body;
+    const datos = [id_producto,id_usuario,cantidad,id];
+    await database.query("Update pedidos set id_producto=?, id_usuario=?,  cantidad = ?  Where id_pedidos = ?",datos);
     res.json({msg:"Pedidos modificado"})
 });
 // descuentos
